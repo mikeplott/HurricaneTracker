@@ -1,0 +1,24 @@
+<html>
+<body>
+{{^name}}
+<form action="/login" method="post">
+    <input type="text" placeholder="Enter name" name="loginName">
+    <br>
+    <br>
+    <input type="password" placeholder="Password" name="password">
+    <br>
+    <br>
+    <button type="submit">Submit</button>
+</form>
+{{/name}}
+
+{{#name}}
+Hello, {{name}}!
+<br>
+<br>
+<form action="/logout" method="post">
+    <button type="submit">Logout</button>
+</form>
+{{/name}}
+</body>
+</html>
