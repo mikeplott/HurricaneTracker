@@ -95,6 +95,24 @@ public class Main {
                     return null;
                 }
         );
+
+        Spark.post(
+                "/delete-hurricane",
+                (request, response) -> {
+                    Session session = request.session();
+                    String name = session.attribute("loginName");
+                    User user = users.get(name);
+                    if (user == null) {
+                        response.redirect("/");
+                        return null;
+                    }
+                    String num = request.queryParams("id");
+                    int id = Integer.parseInt(num);
+                    deleteHurricane(conn, id);
+                    response.redirect("/");
+                    return null;
+                }
+        );
     }
     public static void createTable(Connection conn) throws SQLException {
         Statement stmt = conn.createStatement();
@@ -126,5 +144,11 @@ public class Main {
             hurricanes.add(hurricane);
         }
         return hurricanes;
+    }
+
+    public static void deleteHurricane(Connection conn, int id) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM hurricanes WHERE id = ?");
+        stmt.setInt(1, id);
+        stmt.execute();
     }
 }

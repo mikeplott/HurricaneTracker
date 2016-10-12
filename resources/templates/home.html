@@ -46,14 +46,20 @@ Hello, {{name}}!
         <th>Category</th>
         <th>Submitter</th>
         <th>Image</th>
+        <th>Delete</th>
+        <th>Edit</th>
     </tr>
 {{#hurricanes}}
     <tr>
-        <td>{{name}}</td>
-        <td>{{location}}</td>
-        <td>{{category}}</td>
-        <td>{{user}}</td>
-        <td><img src="{{image}}" width="100" height="100"/></td>
+        <form action="/delete-hurricane" method="post">
+            <input type="hidden" value="{{id}}" name="id">
+            <td>{{name}}</td>
+            <td>{{location}}</td>
+            <td>{{category}}</td>
+            <td>{{user}}</td>
+            <td><img src="{{image}}" width="100" height="100"/></td>
+            <td><button type="submit">Delete</button></td>
+        </form>
     </tr>
 {{/hurricanes}}
 </table>
