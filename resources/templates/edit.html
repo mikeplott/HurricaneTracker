@@ -1,0 +1,41 @@
+<html>
+<body>
+{{#hurricane}}
+<table align="center" width="400px">
+    <tr>
+        <td>{{name}}</td>
+        <td>{{location}}</td>
+        <td>{{category}}</td>
+        <td>{{image}}</td>
+        <td>{{user}}</td>
+    </tr>
+</table>
+<br>
+<br>
+<br>
+<p align="center">Edit the values you would like</p>
+<br>
+<br>
+<br>
+<table>
+    <form action="/edit-message" method="post">
+        <tr>
+            <input type="hidden" value="{{id}}" name="hid">
+            <td><input type="text" placeholder="Hurricane name" id="hname"></td>
+            <td><input type="text" placeholder="Hurricane location" id="hlocation"></td>
+            <td><select name="hcategory">
+                <option selected disabled>Category</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select></td>
+            <td><input type="text" placeholder="Hurricane image url" id="himage"></td>
+            <td><button type="submit">Submit</button></td>
+        </tr>
+    </form>
+</table>
+{{/hurricane}}
+</body>
+</html>
