@@ -29,12 +29,24 @@ public class MainTest {
     @Test
     public void testHurricane() throws SQLException {
         Connection conn = startConnection();
+        Main.insertUser(conn, "Mike", "123");
         User user = Main.selectUser(conn, "Mike");
-        //Main.addHurricane(conn, "notmathew", "notcharleston", 3, "alasdjfalsf", user.name);
-        //Main.addHurricane(conn, "mathew", "charleston", 3, "ajsdflka", user.name);
+        Main.addHurricane(conn, "lskajdf", "lkajsdlfkj", 3, "alksjdfljaf", "Mike", user.id);
+        Main.addHurricane(conn, "alkjsdflkjsal", "kjahsdfljka", 4, "ajldkfjasljf", "Mike", user.id);
         ArrayList<Hurricane> hurricanes = Main.selectHurricanes(conn);
         conn.close();
         assertTrue(hurricanes.size() == 2);
+    }
+
+    @Test
+    public void testSelector() throws SQLException {
+        Connection conn = startConnection();
+        Main.insertUser(conn, "Mike", "123");
+        User user = Main.selectUser(conn, "Mike");
+        Main.addHurricane(conn, "lskajdf", "lkajsdlfkj", 3, "alksjdfljaf", "Mike", user.id);
+        Main.addHurricane(conn, "alkjsdflkjsal", "kjahsdfljka", 4, "ajldkfjasljf", "Mike", user.id);
+        Hurricane hurricane = Main.hurricaneSelect(conn, 1);
+        assertTrue(hurricane != null);
     }
 
 //    @Test

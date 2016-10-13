@@ -113,15 +113,15 @@ public class Main {
                     }
                     String num = request.queryParams("id");
                     int id = Integer.parseInt(num);
-                    System.out.println(user.id);
                     Hurricane h = hurricaneSelect(conn, id);
-                    System.out.println(h.name);
-                    System.out.println(h.userID);
-                    if (user.id == h.userID) {
-                        deleteHurricane(conn, id);
-                        response.redirect("/");
-                        return null;
-                    }
+//                    System.out.println(h.userID);
+//                    if (user.id == h.userID) {
+//                        deleteHurricane(conn, id);
+//                        response.redirect("/");
+//                        return null;
+//                    }
+                    deleteHurricane(conn, id);
+                    response.redirect("/");
                     return null;
                 }
         );
@@ -182,19 +182,19 @@ public class Main {
         stmt.execute("CREATE TABLE IF NOT EXISTS users (id IDENTITY, name VARCHAR, password VARCHAR)");
     }
 
-    public static void addHurricane(Connection conn, String hname, String hlocation, int category, String himage, String name, int id) throws SQLException {
+    public static void addHurricane(Connection conn, String hname, String hlocation, int category, String himage, String name, int uID) throws SQLException {
         PreparedStatement stmt = conn.prepareStatement("INSERT INTO hurricanes VALUES(NULL, ?, ?, ?, ?, ?, ?)");
         stmt.setString(1, hname);
         stmt.setString(2, hlocation);
         stmt.setInt(3, category);
         stmt.setString(4, himage);
         stmt.setString(5, name);
-        stmt.setInt(6, id);
+        stmt.setInt(6, uID);
         stmt.execute();
     }
 
     public static Hurricane hurricaneSelect(Connection conn, int id) throws SQLException {
-        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM hurricanes WHERE id = ?");
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM hurricanes INNER JOIN users ON hurricanes.user_id = users.id  WHERE hurricanes.id = ?");
         stmt.setInt(1, id);
         ResultSet results = stmt.executeQuery();
         if (results.next()) {
@@ -203,8 +203,8 @@ public class Main {
             int cat = results.getInt("category");
             String image = results.getString("image");
             String user = results.getString("user");
-            int uID = results.getInt("user_id");
-            return new Hurricane(id, name, location, cat, image, user, uID);
+            //int uID = results.getInt("user_id");
+            return new Hurricane(id, name, location, cat, image, user);
         }
         return null;
     }
